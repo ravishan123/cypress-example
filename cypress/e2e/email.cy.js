@@ -24,9 +24,15 @@ describe("Example Test", () => {
         .wait(WAIT_TIME)
         .then(() => {
           // cy.verifyEmail('123456');
+          cy.getEmailOTP().then((otp) => {
+            cy.log(otp, 'Verified email')
+          })
         });
+        // it("Should get email Otp", () => {
+        //   cy.getEmailOTP()
+        // });
     }
 
-    cy.log(email.email);
+    
   });
 });
