@@ -8,8 +8,6 @@
     "g": "git add . && git commit -m \"\" "
   },
   "dependencies": {
-    "axios": "^1.4.0",
-    "fs": "^0.0.1-security",
-    "smtp-tester": "^2.0.1"
+   
   }
 }
