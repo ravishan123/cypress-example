@@ -5,7 +5,7 @@
   },
   "scripts": {
     "cypress:open": "cypress open",
-    "g": "git add . && git commit -m \"\" ",
+    "g": "git add && git commit -m \"\" ",
     "test:ci": "cypress run"
   },
   "dependencies": {}
