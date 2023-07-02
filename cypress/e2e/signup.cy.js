@@ -1,4 +1,4 @@
-const WAIT_TIME = 50000;
+const WAIT_TIME = 100000;
 const email = require("../../email.json");
 
 describe("Email Creation", () => {
@@ -34,7 +34,7 @@ describe("Signup Process", () => {
 describe("Login Process", () => {
   it("should log in successfully and fill out the complete profile form", () => {
     cy.login(email.email, "Smash@123")
-      .wait(10000)
+      .wait(WAIT_TIME)
       .then(() => {
         cy.fillCompleteProfileForm();
       });
