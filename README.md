@@ -6,7 +6,7 @@
   <meta name="description" content="Cypress Example Project - This repository contains an example project that demonstrates how to use Cypress to write end-to-end tests for a web application.">
   <meta name="keywords" content="Cypress, example project, end-to-end tests, web application, testing">
   <meta name="author" content="Your Name">
-  <title>Cypress Example Project</title>
+ 
 </head>
 <body>
   <h1>Cypress Example Project 🚀</h1>
