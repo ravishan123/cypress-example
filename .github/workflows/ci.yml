@@ -24,8 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: clear Terminal
-        run: clear
 
       - name: Run Cypress tests
         run: npm run test:ci
