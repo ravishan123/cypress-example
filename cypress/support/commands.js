@@ -19,11 +19,13 @@ Cypress.Commands.add("storeEmailDataFile", (data) => {
 });
 
 //request webhook Id
+
 Cypress.Commands.add("createEmail", () => {
   const createEmailRequest = cy
     .request({
       method: "POST",
       url: "https://webhook.site/token/",
+      
     })
     .then((response) => {
       const { uuid } = response.body;
@@ -33,6 +35,7 @@ Cypress.Commands.add("createEmail", () => {
           timeZone: "Asia/Colombo",
         }),
         email: `${uuid}@email.webhook.site`,
+        password:"Smash@123",
       };
 
       return cy.wrap(data);
