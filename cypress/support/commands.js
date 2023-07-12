@@ -20,7 +20,7 @@ const newProfile = async () => {
       };
 
       return cy.wrap(data);
-    });
+    })
 
   return NewEmail;
 };
@@ -69,7 +69,7 @@ Cypress.Commands.add("getEmailOTP", () => {
       }
 
       const content = extractCode(data);
-      cy.log(JSON.stringify(content));
+
       return cy.wrap(content);
     });
 });
@@ -92,6 +92,7 @@ Cypress.Commands.add("signup", () => {
         cy.get('button[type="submit"]').click();
       });
   });
+  cy.wait(100000)
 });
 
 Cypress.Commands.add("verifyAccount", (email, password) => {
