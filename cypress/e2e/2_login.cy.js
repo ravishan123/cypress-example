@@ -1,4 +1,4 @@
-const email = require('../../email.json')
+
 // Login process
 // describe('Login', () => {
 //   it('should log in successfully', () => {
