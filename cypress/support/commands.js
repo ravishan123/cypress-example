@@ -20,17 +20,17 @@ const newProfile = async () => {
       };
 
       return cy.wrap(data);
-    })
+    });
 
   return NewEmail;
 };
 
-Cypress.Commands.add("login", () => {
-  const { email, password } = profile;
+Cypress.Commands.add("login", (email, password) => {
+  const { NewEmail, NewPassword } = profile || [];
   cy.visit("https://next.hellomolly.io/");
 
-  cy.get("#email").type(email); // Assuming the email input has the id "email"
-  cy.get("#password").type(password); // Assuming the password input has the id "password"
+  cy.get("#email").type(email ? email : NewEmail); // Assuming the email input has the id "email"
+  cy.get("#password").type(password ? password : NewPassword); // Assuming the password input has the id "password"
 
   cy.get('button[type="submit"]').click(); // Assuming the submit button has a "type" attribute with value "submit"
 });
@@ -92,7 +92,7 @@ Cypress.Commands.add("signup", () => {
         cy.get('button[type="submit"]').click();
       });
   });
-  cy.wait(100000)
+  cy.wait(100000);
 });
 
 Cypress.Commands.add("verifyAccount", (email, password) => {
