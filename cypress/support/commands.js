@@ -1,29 +1,12 @@
-// let SITE_URL = "https://next.hellomolly.io/";
-const email = require("../../email.json");
+let profile;
+const WEB_HOOK = "https://webhook.site/token/";
+const BASED_URL = `https://next.hellomolly.io/`;
 
-Cypress.Commands.add("login", (email, password) => {
-  cy.visit("https://next.hellomolly.io/");
-
-  cy.get("#email").type(email); // Assuming the email input has the id "email"
-  cy.get("#password").type(password); // Assuming the password input has the id "password"
-
-  cy.get('button[type="submit"]').click(); // Assuming the submit button has a "type" attribute with value "submit"
-});
-
-Cypress.Commands.add("storeEmailDataFile", (data) => {
-  const jsonData = JSON.stringify(data, null, 2);
-
-  cy.writeFile("email.json", jsonData).then(() => {
-    return data;
-  });
-});
-
-//request webhook Id
-Cypress.Commands.add("createEmail", () => {
-  const createEmailRequest = cy
+const newProfile = async () => {
+  const NewEmail = cy
     .request({
       method: "POST",
-      url: "https://webhook.site/token/",
+      url: WEB_HOOK,
     })
     .then((response) => {
       const { uuid } = response.body;
@@ -33,11 +16,23 @@ Cypress.Commands.add("createEmail", () => {
           timeZone: "Asia/Colombo",
         }),
         email: `${uuid}@email.webhook.site`,
+        password: "Smash@123",
       };
 
       return cy.wrap(data);
     });
-  return createEmailRequest;
+
+  return NewEmail;
+};
+
+Cypress.Commands.add("login", () => {
+  const { email, password } = profile;
+  cy.visit("https://next.hellomolly.io/");
+
+  cy.get("#email").type(email); // Assuming the email input has the id "email"
+  cy.get("#password").type(password); // Assuming the password input has the id "password"
+
+  cy.get('button[type="submit"]').click(); // Assuming the submit button has a "type" attribute with value "submit"
 });
 
 Cypress.Commands.add("getEmailOTP", () => {
@@ -46,7 +41,7 @@ Cypress.Commands.add("getEmailOTP", () => {
   const query = "";
   const sorting = "oldest";
 
-  const url = `https://webhook.site/token/${email.id}/requests`;
+  const url = `${WEB_HOOK}${profile.id}/requests`;
 
   return cy
     .request({
@@ -81,16 +76,22 @@ Cypress.Commands.add("getEmailOTP", () => {
 
 // signup page
 
-Cypress.Commands.add("signup", (email, password) => {
-  cy.visit(`https://next.hellomolly.io/`);
-  cy.get('a[href="/signup"]')
-    .click()
-    .then(() => {
-      cy.get("input#email").type(email);
-      cy.get("input#password").type(password);
-      cy.get("input#confirm-password").type(password);
-      cy.get('button[type="submit"]').click();
-    });
+Cypress.Commands.add("signup", () => {
+  newProfile().then((response) => {
+    cy.log("signup_data", JSON.stringify(response));
+
+    const { email, password } = response;
+    profile = response;
+    cy.visit(`https://next.hellomolly.io/`);
+    cy.get('a[href="/signup"]')
+      .click()
+      .then(() => {
+        cy.get("input#email").type(email);
+        cy.get("input#password").type(password);
+        cy.get("input#confirm-password").type(password);
+        cy.get('button[type="submit"]').click();
+      });
+  });
 });
 
 Cypress.Commands.add("verifyAccount", (email, password) => {
